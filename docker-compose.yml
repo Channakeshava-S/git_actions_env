@@ -15,4 +15,4 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
     volumes:
-      - "/home/image-server/Photos:/images"
+      - "/home/test_image-server/Photos:/images"
