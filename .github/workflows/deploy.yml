@@ -39,5 +39,11 @@ jobs:
           envs: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, IMGPROXY_KEY, IMGPROXY_SALT
           script: |
             cd /home/test_image-server
-            git pull origin main
+            echo ">>> Pulling latest code"
+            if [ ! -d .git ]; then
+              git clone https://github.com/${{ github.repository }} .
+            else
+              git reset --hard
+              git pull origin main
+            fi
             docker compose up -d
