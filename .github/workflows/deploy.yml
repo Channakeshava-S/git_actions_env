@@ -19,16 +19,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.environment || 'dev' }}
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Debug secrets
+      - name: Debug environment
         run: |
-          echo "DO_HOST: ${{ secrets.DO_HOST }}"
-          echo "DO_USER: ${{ secrets.DO_USER }}"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Target environment: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.environment || 'dev' }}"
 
       - name: Deploy to Droplet via SSH
         uses: appleboy/ssh-action@v1.0.3
